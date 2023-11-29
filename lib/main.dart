@@ -59,12 +59,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  late Future<List<Course>> futureAlbum;
+  late Future<List<Course>> futureCourses;
 
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchAlbum();
+    futureCourses = fetchCourses();
   }
 
   void _incrementCounter() {
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return FutureBuilder(
-      future: futureAlbum,
+      future: futureCourses,
       builder: (context, AsyncSnapshot<List<Course>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data == null) {

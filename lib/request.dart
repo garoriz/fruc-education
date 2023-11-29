@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'courses.dart';
 
-Future<List<Course>> fetchAlbum() async {
+Future<List<Course>> fetchCourses() async {
   final response = await http.get(
     Uri.parse('https://apidev.baze.pro/v1/course?limit=999&page=0'),
     headers: {
