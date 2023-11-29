@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fruc_education/request.dart';
 
@@ -88,21 +86,34 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return FutureBuilder<List<Course>>(
+    return FutureBuilder(
+      future: futureAlbum,
+      builder: (context, AsyncSnapshot<List<Course>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.data == null) {
+            return const Center(child: Text('Something went wrong'));
+          }
+
+          return Scaffold(
+              body: ListView.builder(
+                  itemCount: snapshot.data?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(snapshot.data![index].name),
+                      subtitle: Text(snapshot.data![index].description),
+                    );
+                  })
+          );
+        }
+        return const CircularProgressIndicator();
+      },
+    );
+
+    /*return FutureBuilder<List<Course>>(
       future: futureAlbum,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          MaterialApp(
-              home:  Scaffold(
-                body: ListView.builder(
-                    padding: const EdgeInsets.all(8),
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(snapshot.data![index].name, style: const TextStyle(fontSize: 22));
-                    }
-                ),
-                appBar: AppBar(title: Text("METANIT.COM")),)
-          );
+          return Text(snapshot.data!.first.name);
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
@@ -110,6 +121,51 @@ class _MyHomePageState extends State<MyHomePage> {
         // By default, show a loading spinner.
         return const CircularProgressIndicator();
       },
-    );
+    );*/
+    /*return Scaffold(
+      appBar: AppBar(
+        // TRY THIS: Try changing the color here to a specific color (to
+        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+        // change color while the other colors stay the same.
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
+      ),
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          //
+          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+          // action in the IDE, or press "p" in the console), to see the
+          // wireframe for each widget.
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              '123',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );*/
   }
 }
