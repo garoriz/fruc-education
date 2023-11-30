@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import 'courses.dart';
+import 'model/courses.dart';
 
 Future<List<Course>> fetchCourses() async {
   final response = await http.get(
