@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/lessons.dart';
+import '../../model/lesson.dart';
 
 class LessonDetailPage extends StatelessWidget {
-  final Lessons lesson;
+  final Lesson lesson;
 
   LessonDetailPage({required this.lesson});
 
@@ -16,7 +16,7 @@ class LessonDetailPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Text(lesson.description),
+        child: Text("description..."),
       ),
     );
   }

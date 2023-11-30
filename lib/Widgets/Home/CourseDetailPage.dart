@@ -5,57 +5,30 @@ import 'package:flutter/material.dart';
 
 import '../../model/block.dart';
 import '../../model/courses.dart';
+import 'BlockDetailPage.dart';
 import 'CourseDetailPage.dart';
 import 'request.dart';
 import 'package:http/http.dart' as http;
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
+class CourseDetailPage extends StatefulWidget {
+  CourseDetailPage({super.key, required this.course});
+  var course;
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CourseDetailPage> createState() => _CourseDetailPageState(course["id"]);
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  List<dynamic> courses = [];
-  late var futureCourses;
-
+class _CourseDetailPageState extends State<CourseDetailPage> {
+  List<dynamic> blocks = [];
+  late var courseId;
+  _CourseDetailPageState(this.courseId);
   @override
   void initState() {
     super.initState();
-    fetchCourses();
-    futureCourses = fetchCourses();
+    fetchBlocks(courseId);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Container(
-        alignment: Alignment.center,
-        child: Text('Courses'),
-      )),
-      body: ListView.builder(
-        itemCount: courses.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CourseDetailPage(course: courses[index])),
-              );
-            },
-            child: Text(courses[index]["name"]),
-          );
-        },
-      ),
-    );
-  }
-
-  Future<void> fetchCourses() async {
-    var url = Uri.parse('https://apidev.baze.pro/v1/course');
+  Future<void> fetchBlocks(var courseId) async {
+    var url = Uri.parse('https://apidev.baze.pro/v1/block?courseId=$courseId');
     var headers = {
       'Authorization':
           'APIKEY mh5PhBx4W19uqjfgNvQvRslDelnAVLLdr6vpCyrkvfxbbcAItMPPfpkghgRT0yufR92CvwXM35XOPcMU5Gc4Ud2eaO6fIwSCBgAREheuKPjMvimd7vzIYUkbfVH8EAOglFXff9jWPo7Z5PF3ao4FRLBXw3pGuXNY2srz7YJeWmeWjq7gOT4Km2hsqO9Kle1HoVrOF6K5qvjTM6EjX40Z98QEbVegVejgk90FgJI',
@@ -64,11 +37,37 @@ class _MyHomePageState extends State<MyHomePage> {
     if (response.statusCode == 200) {
       final data = jsonDecode(utf8.decode(response.bodyBytes));
       setState(() {
-        courses = data['content'];
+        blocks = data;
       });
     } else {
       throw Exception('Failed to fetch data');
     }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          title: Container(
+            alignment: Alignment.center,
+            child: Text('Modules'),
+          )),
+      body: ListView.builder(
+        itemCount: blocks.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        BlockDetailPage(blocks[index], courseId)),
+              );
+            },
+            child: Text(blocks[index]["name"]),
+          );
+        },
+      ),
+    );
   }
 }
 

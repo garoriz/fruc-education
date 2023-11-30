@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fruc_education/model/lessons.dart';
-import 'package:fruc_education/request.dart';
 
 // ToDo: импортнуть этот пакет для того, чтобы иконки уроков загружать
 /*import 'package:photo_view/photo_view.dart';*/
 
 import 'Widgets/Home/MyHomePage.dart';
-import 'model/courses.dart';
 
 
 void main() {
