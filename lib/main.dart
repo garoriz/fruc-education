@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fruc_education/knowledgebase/request.dart';
 
-import 'courses.dart';
-
+import 'knowledgebase/courses.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,12 +59,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  late Future<List<Course>> futureCourses;
+  //late Future<List<Course>> futureCourses;
 
   @override
   void initState() {
     super.initState();
-    futureCourses = fetchCourses();
+    //futureCourses = fetchCourses();
   }
 
   void _incrementCounter() {
@@ -87,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return FutureBuilder(
+    /*return FutureBuilder(
       future: futureCourses,
       builder: (context, AsyncSnapshot<List<Course>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -108,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
         }
         return const CircularProgressIndicator();
       },
-    );
+    );*/
 
     /*return FutureBuilder<List<Course>>(
       future: futureAlbum,
@@ -123,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return const CircularProgressIndicator();
       },
     );*/
-    /*return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
@@ -167,6 +166,6 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );*/
+    );
   }
 }

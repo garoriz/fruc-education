@@ -1,11 +1,9 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:fruc_education/knowledgebase/request.dart';
 import 'package:fruc_education/lesson/lesson.dart';
 import 'package:fruc_education/lesson/request.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 void main() {
   runApp(const MyApp());
@@ -103,14 +101,113 @@ class _MyHomePageState extends State<MyHomePage> {
         return const CircularProgressIndicator();
       },
     );*/
-    return Html(data: """
-        <h1>Hello, World!</h1>
-        <p><span style="font-style:italic;">flutter_html</span> supports a variety of HTML and CSS tags and attributes.</p>
-        <p>Over a hundred static tags are supported out of the box.</p>
-        <p>Or you can even define your own using an <code>Extension</code>: <flutter></flutter></p>
-        <p>Its easy to add custom styles to your Html as well using the <code>Style</code> class:</p>
-        <p class="fancy">Here's a fancy &lt;p&gt; element!</p>
-        """,
+    return FutureBuilder(
+      future: futureLessonContent,
+      builder: (context, AsyncSnapshot<List<LessonContent>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.data == null) {
+            return const Center(child: Text('Something went wrong'));
+          }
+          var data = snapshot.data;
+          List<Widget> widgets = [];
+          for (int i = 0; i < data!.length; i++) {
+            for (int j = 0; j < data[i].items.length; j++) {
+              if (data[i].items[j].type == 'TEXT') {
+                var string = getRawString(data[i].items[j].data);
+                widgets.add(Text(string,
+                    style: Theme.of(context).textTheme.headlineMedium));
+              } else if (data[i].items[j].type == 'FILE') {
+                widgets.add(ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    elevation: 0,
+                  ),
+                  onPressed: () {},
+                  child: Text(data[i].items[j].buttonName.toString()),
+                ));
+              } else if (data[i].items[j].type == 'IMAGE') {
+                widgets.add(CachedNetworkImage(
+                  imageUrl:
+                      'https://apidev.baze.pro/v1/lesson/template/data/5661Jzggt3FyMJUSoBhe9LiapuSRRgQTESMRSVDLQ0As3qhsIxOIYh6RjXiR1lia906rgvMTgHWPodY6sWaBjKHye6S7d',
+                  httpHeaders: {
+                    'Authorization':
+                        'APIKEY mh5PhBx4W19uqjfgNvQvRslDelnAVLLdr6vpCyrkvfxbbcAItMPPfpkghgRT0yufR92CvwXM35XOPcMU5Gc4Ud2eaO6fIwSCBgAREheuKPjMvimd7vzIYUkbfVH8EAOglFXff9jWPo7Z5PF3ao4FRLBXw3pGuXNY2srz7YJeWmeWjq7gOT4Km2hsqO9Kle1HoVrOF6K5qvjTM6EjX40Z98QEbVegVejgk90FgJI'
+                  },
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ));
+              } else if (data[i].items[j].type == 'VIDEO') {
+                final _controller = YoutubePlayerController(
+                  params: YoutubePlayerParams(
+                    mute: false,
+                    showControls: true,
+                    showFullscreenButton: true,
+                  ),
+                );
+                _controller.loadVideoById(videoId: data[i].items[j].data);
+                widgets.add(YoutubePlayerScaffold(
+                  controller: _controller,
+                  aspectRatio: 16 / 9,
+                  builder: (context, player) {
+                    return Column(
+                      children: [
+                        player,
+                      ],
+                    );
+                  },
+                ));
+              } else if (data[i].items[j].type == 'AUDIO') {
+                final player = AudioPlayer();
+                widgets.add(ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    elevation: 0,
+                  ),
+                  onPressed: () async {
+                    await player.setUrl(
+                        'http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3',
+                        /*headers: {
+                          'Authorization':
+                              'APIKEY mh5PhBx4W19uqjfgNvQvRslDelnAVLLdr6vpCyrkvfxbbcAItMPPfpkghgRT0yufR92CvwXM35XOPcMU5Gc4Ud2eaO6fIwSCBgAREheuKPjMvimd7vzIYUkbfVH8EAOglFXff9jWPo7Z5PF3ao4FRLBXw3pGuXNY2srz7YJeWmeWjq7gOT4Km2hsqO9Kle1HoVrOF6K5qvjTM6EjX40Z98QEbVegVejgk90FgJI'
+                        }*/);
+                    await player.play();
+                  },
+                  child: Text(data[i].items[j].buttonName.toString()),
+                ));
+              }
+            }
+          }
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: widgets,
+            ),
+          );
+        }
+        return const CircularProgressIndicator();
+      },
     );
   }
+}
+
+String getRawString(String html) {
+  String result = '';
+  int count = 0;
+  for (int i = 0; i < html.length; i++) {
+    if (html[i] == '&') {
+      while (html[i] != ';') {
+        i++;
+      }
+      i++;
+    }
+    if (html[i] == '<') {
+      count++;
+    } else if (html[i] == '>') {
+      count--;
+      result += '\n';
+    } else if (count == 0) {
+      result += html[i];
+    }
+  }
+  return result;
 }
