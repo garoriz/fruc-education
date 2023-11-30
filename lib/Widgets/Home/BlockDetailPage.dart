@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../lesson/lesson_screen.dart';
+
 class BlockDetailPage extends StatefulWidget {
   var block;
   var courseId;
@@ -63,7 +65,7 @@ class _BlockDetailPage extends State<BlockDetailPage>{
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        LessonDetailPage(lessons[index] )),
+                        LessonScreen(lessonId: lessons[index]["id"] )),
               );
             },
             child: Text(lessons[index]["name"]),
