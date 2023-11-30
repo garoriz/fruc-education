@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../model/courses.dart';
 import '../../model/lessons.dart';
-import '../../request.dart';
+import 'request.dart';
 import '../LessonPage/LessonDetailPage.dart';
 
 class MyHomePage extends StatefulWidget {
