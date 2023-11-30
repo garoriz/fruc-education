@@ -108,6 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
           if (snapshot.data == null) {
             return const Center(child: Text('Something went wrong'));
           }
+          const double gap = 10;
           var data = snapshot.data;
           List<Widget> widgets = [];
           for (int i = 0; i < data!.length; i++) {
@@ -125,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {},
                   child: Text(data[i].items[j].buttonName.toString()),
                 ));
+                widgets.add(SizedBox(height: gap));
               } else if (data[i].items[j].type == 'IMAGE') {
                 widgets.add(CachedNetworkImage(
                   imageUrl:
@@ -136,6 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   placeholder: (context, url) => CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ));
+                widgets.add(SizedBox(height: gap));
               } else if (data[i].items[j].type == 'VIDEO') {
                 final _controller = YoutubePlayerController(
                   params: YoutubePlayerParams(
@@ -156,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   },
                 ));
+                widgets.add(SizedBox(height: gap));
               } else if (data[i].items[j].type == 'AUDIO') {
                 final player = AudioPlayer();
                 widgets.add(ElevatedButton(
@@ -165,15 +169,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   onPressed: () async {
                     await player.setUrl(
-                        'http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3',
-                        /*headers: {
+                        'https://apidev.baze.pro/v1/lesson/template/data/566tvRGQzTC7QxuEUU9iRDdZLodLMBXO5IuZ0yQq0WMOfpIb0joEm0MDyk2ErzUB0SpuXXFHIHaOJqWGfzZvrTYytOQLy',
+                        headers: {
                           'Authorization':
                               'APIKEY mh5PhBx4W19uqjfgNvQvRslDelnAVLLdr6vpCyrkvfxbbcAItMPPfpkghgRT0yufR92CvwXM35XOPcMU5Gc4Ud2eaO6fIwSCBgAREheuKPjMvimd7vzIYUkbfVH8EAOglFXff9jWPo7Z5PF3ao4FRLBXw3pGuXNY2srz7YJeWmeWjq7gOT4Km2hsqO9Kle1HoVrOF6K5qvjTM6EjX40Z98QEbVegVejgk90FgJI'
-                        }*/);
+                        });
                     await player.play();
                   },
                   child: Text(data[i].items[j].buttonName.toString()),
                 ));
+                widgets.add(SizedBox(height: gap));
               }
             }
           }
