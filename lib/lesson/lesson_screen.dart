@@ -1,7 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:fruc_education/request.dart';
+import 'dart:html';
 
-import 'courses.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:fruc_education/knowledgebase/request.dart';
+import 'package:fruc_education/lesson/lesson.dart';
+import 'package:fruc_education/lesson/request.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -59,12 +63,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  late Future<List<Course>> futureCourses;
+  late Future<List<LessonContent>> futureLessonContent;
 
   @override
   void initState() {
     super.initState();
-    futureCourses = fetchCourses();
+    futureLessonContent = fetchLessonContent();
   }
 
   void _incrementCounter() {
@@ -86,86 +90,27 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return FutureBuilder(
-      future: futureCourses,
-      builder: (context, AsyncSnapshot<List<Course>> snapshot) {
+    /*return FutureBuilder(
+      future: futureLessonContent,
+      builder: (context, AsyncSnapshot<List<LessonContent>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data == null) {
             return const Center(child: Text('Something went wrong'));
           }
 
-          return Scaffold(
-              body: ListView.builder(
-                  itemCount: snapshot.data?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(snapshot.data![index].name),
-                      subtitle: Text(snapshot.data![index].description),
-                    );
-                  })
-          );
+          return Text(snapshot.data![0].items[0].data);
         }
         return const CircularProgressIndicator();
       },
+    );*/
+    return Html(data: """
+        <h1>Hello, World!</h1>
+        <p><span style="font-style:italic;">flutter_html</span> supports a variety of HTML and CSS tags and attributes.</p>
+        <p>Over a hundred static tags are supported out of the box.</p>
+        <p>Or you can even define your own using an <code>Extension</code>: <flutter></flutter></p>
+        <p>Its easy to add custom styles to your Html as well using the <code>Style</code> class:</p>
+        <p class="fancy">Here's a fancy &lt;p&gt; element!</p>
+        """,
     );
-
-    /*return FutureBuilder<List<Course>>(
-      future: futureAlbum,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text(snapshot.data!.first.name);
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-
-        // By default, show a loading spinner.
-        return const CircularProgressIndicator();
-      },
-    );*/
-    /*return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              '123',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );*/
   }
 }
