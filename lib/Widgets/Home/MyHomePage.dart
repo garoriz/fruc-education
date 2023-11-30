@@ -12,9 +12,9 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState1();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
-class _MyHomePageState1 extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   late Future<List<Course>> futureCourses;
   late List<String> lessonsName = ["lesson1", "lesson2", "lesson3", "lesson4"];
 
@@ -29,7 +29,7 @@ class _MyHomePageState1 extends State<MyHomePage> {
     return FutureBuilder(
       future: futureCourses,
       builder: (context, AsyncSnapshot<List<Course>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState. done) {
           if (snapshot.data == null) {
             return const Center(child: Text('Something went wrong'));
           }
@@ -37,7 +37,7 @@ class _MyHomePageState1 extends State<MyHomePage> {
             appBar: AppBar(
                 title: Container(
                   alignment: Alignment.center,
-                  child: Text('Courses123'),
+                  child: Text('Courses'),
                 )),
             body: ListView.builder(
               itemCount: snapshot.data?.length,
