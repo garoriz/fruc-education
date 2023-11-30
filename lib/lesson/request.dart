@@ -5,12 +5,12 @@ import 'package:fruc_education/lesson/lesson.dart';
 
 import 'package:http/http.dart' as http;
 
-Future<List<LessonContent>> fetchLessonContent() async {
+Future<List<LessonContent>> fetchLessonContent(var lessonId) async {
   final response = await http.get(
-    Uri.parse('https://apidev.baze.pro/v1/lesson/566/template'),
+    Uri.parse('https://apidev.baze.pro/v1/lesson/$lessonId/template'),
     headers: {
       HttpHeaders.authorizationHeader:
-          'APIKEY mh5PhBx4W19uqjfgNvQvRslDelnAVLLdr6vpCyrkvfxbbcAItMPPfpkghgRT0yufR92CvwXM35XOPcMU5Gc4Ud2eaO6fIwSCBgAREheuKPjMvimd7vzIYUkbfVH8EAOglFXff9jWPo7Z5PF3ao4FRLBXw3pGuXNY2srz7YJeWmeWjq7gOT4Km2hsqO9Kle1HoVrOF6K5qvjTM6EjX40Z98QEbVegVejgk90FgJI',
+      'APIKEY mh5PhBx4W19uqjfgNvQvRslDelnAVLLdr6vpCyrkvfxbbcAItMPPfpkghgRT0yufR92CvwXM35XOPcMU5Gc4Ud2eaO6fIwSCBgAREheuKPjMvimd7vzIYUkbfVH8EAOglFXff9jWPo7Z5PF3ao4FRLBXw3pGuXNY2srz7YJeWmeWjq7gOT4Km2hsqO9Kle1HoVrOF6K5qvjTM6EjX40Z98QEbVegVejgk90FgJI',
     },
   );
 
