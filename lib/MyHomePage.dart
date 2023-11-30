@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/block.dart';
-import '../../model/courses.dart';
-import 'CourseDetailPage.dart';
-import 'request.dart';
+import 'model/block.dart';
+import 'model/courses.dart';
+import 'Widgets/Home/CourseDetailPage.dart';
+import 'Widgets/Home/request.dart';
 import 'package:http/http.dart' as http;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
+  static const routeName="/course";
   final String title;
 
   @override
