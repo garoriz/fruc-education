@@ -62,7 +62,7 @@ class _LessonScreenState extends State<LessonScreen> {
               if (snapshot.data == null) {
                 return const Center(child: Text('Something went wrong'));
               }
-              const double gap = 10;
+              const double gap = 20;
               var data = snapshot.data;
               List<Widget> widgets = [];
               for (int i = 0; i < data!.length; i++) {
@@ -94,19 +94,18 @@ class _LessonScreenState extends State<LessonScreen> {
                         ],
                       ));
                     }
-                  }
-                  /*else if (data[i].items[j].type == 'FILE') {
+                  } else if (data[i].items[j].type == 'FILE') {
                     widgets.add(ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
                         elevation: 0,
+                        minimumSize: const Size.fromHeight(50),
                       ),
                       onPressed: () {},
                       child: Text(data[i].items[j].buttonName.toString()),
                     ));
                     widgets.add(SizedBox(height: gap));
-                  }*/
-                  else if (data[i].items[j].type == 'IMAGE') {
+                  } else if (data[i].items[j].type == 'IMAGE') {
                     widgets.add(CachedNetworkImage(
                       imageUrl:
                           //'https://apidev.baze.pro/v1/lesson/template/data/5661Jzggt3FyMJUSoBhe9LiapuSRRgQTESMRSVDLQ0As3qhsIxOIYh6RjXiR1lia906rgvMTgHWPodY6sWaBjKHye6S7d'
@@ -150,11 +149,12 @@ class _LessonScreenState extends State<LessonScreen> {
                       ],
                     ));
                     widgets.add(SizedBox(height: gap));
-                  } /*else if (data[i].items[j].type == 'AUDIO') {
+                  } else if (data[i].items[j].type == 'AUDIO') {
                     final player = AudioPlayer();
                     widgets.add(ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
+                        minimumSize: const Size.fromHeight(50),
                         elevation: 0,
                       ),
                       onPressed: () async {
@@ -169,7 +169,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       child: Text(data[i].items[j].buttonName.toString()),
                     ));
                     widgets.add(SizedBox(height: gap));
-                  }*/
+                  }
                 }
               }
               return SingleChildScrollView(
