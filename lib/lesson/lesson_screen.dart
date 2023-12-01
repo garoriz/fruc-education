@@ -110,11 +110,11 @@ class _LessonScreenState extends State<LessonScreen> {
                     widgets.add(CachedNetworkImage(
                       imageUrl:
                           //'https://apidev.baze.pro/v1/lesson/template/data/5661Jzggt3FyMJUSoBhe9LiapuSRRgQTESMRSVDLQ0As3qhsIxOIYh6RjXiR1lia906rgvMTgHWPodY6sWaBjKHye6S7d'
-                          'https://img.freepik.com/premium-photo/successful-business-people-in-suits-on-business-meeting_85574-12066.jpg',
-                      httpHeaders: {
+                          'https://www.fmsfranchise.com/wp-content/uploads/2016/07/10-best-ways-to-market-your-franchise-scaled.jpg',
+                      /*httpHeaders: {
                         'Authorization':
                             'APIKEY mh5PhBx4W19uqjfgNvQvRslDelnAVLLdr6vpCyrkvfxbbcAItMPPfpkghgRT0yufR92CvwXM35XOPcMU5Gc4Ud2eaO6fIwSCBgAREheuKPjMvimd7vzIYUkbfVH8EAOglFXff9jWPo7Z5PF3ao4FRLBXw3pGuXNY2srz7YJeWmeWjq7gOT4Km2hsqO9Kle1HoVrOF6K5qvjTM6EjX40Z98QEbVegVejgk90FgJI'
-                      },
+                      },*/
                       placeholder: (context, url) =>
                           CircularProgressIndicator(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
