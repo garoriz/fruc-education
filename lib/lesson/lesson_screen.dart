@@ -68,31 +68,34 @@ class _LessonScreenState extends State<LessonScreen> {
               for (int i = 0; i < data!.length; i++) {
                 for (int j = 0; j < data[i].items.length; j++) {
                   if (data[i].items[j].type == 'TEXT') {
-                    var string = getRawString(data[i].items[j].data);
-                    widgets.add(Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Текстовый контент',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold)),
-                        SizedBox(height: 8),
-                        Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              string,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium
-                                  ?.copyWith(color: Colors.black),
+                    var string = getRawString(data[i].items[j].data).trim();
+                    if (string != "") {
+                      widgets.add(Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold)),
+                          SizedBox(height: 8),
+                          Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                string,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.copyWith(color: Colors.black),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ));
-                  } /*else if (data[i].items[j].type == 'FILE') {
+                        ],
+                      ));
+                    }
+                  }
+                  /*else if (data[i].items[j].type == 'FILE') {
                     widgets.add(ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
@@ -102,7 +105,8 @@ class _LessonScreenState extends State<LessonScreen> {
                       child: Text(data[i].items[j].buttonName.toString()),
                     ));
                     widgets.add(SizedBox(height: gap));
-                  }*/ else if (data[i].items[j].type == 'IMAGE') {
+                  }*/
+                  else if (data[i].items[j].type == 'IMAGE') {
                     widgets.add(CachedNetworkImage(
                       imageUrl:
                           //'https://apidev.baze.pro/v1/lesson/template/data/5661Jzggt3FyMJUSoBhe9LiapuSRRgQTESMRSVDLQ0As3qhsIxOIYh6RjXiR1lia906rgvMTgHWPodY6sWaBjKHye6S7d'
@@ -202,5 +206,11 @@ String getRawString(String html) {
       result += html[i];
     }
   }
+
+  List<String> c = result.split("");
+  while (c.isNotEmpty && c[c.length - 1] == '\n') {
+    c.removeLast();
+  }
+  result = c.join();
   return result;
 }
