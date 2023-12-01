@@ -12,7 +12,9 @@ import 'package:http/http.dart' as http;
 
 class CourseDetailPage extends StatefulWidget {
   CourseDetailPage({super.key, required this.course});
+
   var course;
+
   @override
   State<CourseDetailPage> createState() => _CourseDetailPageState(course["id"]);
 }
@@ -20,7 +22,9 @@ class CourseDetailPage extends StatefulWidget {
 class _CourseDetailPageState extends State<CourseDetailPage> {
   List<dynamic> blocks = [];
   late var courseId;
+
   _CourseDetailPageState(this.courseId);
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +47,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
       throw Exception('Failed to fetch data');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,13 +61,11 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding:
-            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
             // Add padding to the left and right sides
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors
-                    .orange, // Change button color              elevation: 0,
-              ),
+                  primary: Colors.orange, alignment: Alignment.center),
               onPressed: () {
                 Navigator.push(
                   context,
