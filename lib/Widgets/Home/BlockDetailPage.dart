@@ -52,23 +52,43 @@ class _BlockDetailPage extends State<BlockDetailPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Container(
-            alignment: Alignment.center,
-            child: Text('Modules'),
-          )),
+        title: Center(
+          child: Text('Lessons'),
+        ),
+      ),
       body: ListView.builder(
         itemCount: lessons.length,
         itemBuilder: (BuildContext context, int index) {
-          return ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        LessonScreen(lessonId: lessons[index]["id"] )),
-              );
-            },
-            child: Text(lessons[index]["name"]),
+          return Padding(
+            padding:
+            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            // Add padding to the left and right sides
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors
+                    .orange, // Change button color              elevation: 0,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          LessonScreen(lessonId: lessons[index]["id"])),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    lessons[index]["name"],
+                    style: TextStyle(
+                      color: Colors.white, // Change text color
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           );
         },
       ),

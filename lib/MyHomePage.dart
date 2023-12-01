@@ -3,10 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'model/block.dart';
-import 'model/courses.dart';
 import 'Widgets/Home/CourseDetailPage.dart';
-import 'Widgets/Home/request.dart';
 import 'package:http/http.dart' as http;
 
 class MyHomePage extends StatefulWidget {
@@ -33,21 +30,43 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Container(
-        alignment: Alignment.center,
-        child: Text('Courses'),
-      )),
+        title: Center(
+          child: Text('Modules'),
+        ),
+      ),
       body: ListView.builder(
         itemCount: courses.length,
         itemBuilder: (BuildContext context, int index) {
-          return ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CourseDetailPage(course: courses[index])),
-              );
-            },
-            child: Text(courses[index]["name"]),
+          return Padding(
+            padding:
+            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            // Add padding to the left and right sides
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors
+                    .orange, // Change button color              elevation: 0,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CourseDetailPage(course: courses[index])),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    courses[index]["name"],
+                    style: TextStyle(
+                      color: Colors.white, // Change text color
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           );
         },
       ),
